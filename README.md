@@ -1,4 +1,4 @@
-# `steady-viewport`
+# ⛰ `steady-viewport`
 
 The `steady-viewport` JavaScript utility is a tiny, dead simple script with no dependencies which introduces two CSS variables that can be used instead of the CSS `vh` and `vw` units to size elements based on the viewport.
 
