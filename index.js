@@ -9,12 +9,6 @@ let eventHandler = _ => {
   let windowViewportPortrait = window.innerWidth < window.innerHeight;
   let windowViewportArea = window.innerWidth * window.innerHeight;
 
-  console.log(
-    Math.abs(windowViewportArea - lastWindowViewportArea),
-    (lastWindowViewportArea / 3),
-    Math.abs(windowViewportArea - lastWindowViewportArea) > (lastWindowViewportArea / 3)
-  );
-
   // We avoid updating the viewport height in circumstances where it is likely due to a toggling URL bar.
   // For the viewport height to not be updated, the following 3 conditions must be met:
   let shouldUpdateViewportHeight = !(
