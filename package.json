@@ -1,3 +1,6 @@
 {
-  
+  "name": "steady-viewport",
+  "version": "1.0.0",
+  "author": "Aaron Beaudoin",
+  "license": "MIT"
 }
