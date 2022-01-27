@@ -12,14 +12,29 @@ For now, this utility is not on `npm`, but it's still easy to install using the 
 npm install https://github.com/AaronBeaudoin/steady-viewport.git
 ```
 
-## CSS Variables
+Then, include it in your HTML at the very top of the head so it runs first:
+
+```html
+<script src="/path/to/script"></script>
+```
+
+For example, in Vite you can add the following:
+
+```html
+<script src="/node_modules/steady-viewport"></script>
+```
+
+Note that `type="module"` is intentionally left out, because this would defeat the purpose of putting the script at the top of the `<head>`. Since major layout element may depend on these variables, the script needs to run as soon as possible to avoid layout shift as the page is loading.
+
+
+## CSS Variables Added
 
 Only two simple CSS variables are added and updated by this utility:
 
 - `--vw`: The viewport width, **not** including the vertical scrollbar if present.
 - `--vh`: The viewport height, **not** including the horizontal scrollbar if present, and not affected by insignificant changes to the viewport height—such as the URL navigation bar toggling in a mobile browser.
 
-That's it. Do be aware that `--vw` is therefore the same as `100vw`, not `1vw`. The same goes for `--vh`.
+That's it. Note that `--vw` is the same as `100vw`, not `1vw`. The same goes for `--vh`.
 
 ## Why not just use `vh` and `vw`?
 
@@ -46,3 +61,7 @@ To recap, the following three conditions must all be met:
 As previously indicated, I haven't been able to think of a scenario where this would be a problem, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the URL navigation bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes which change the dimensions of the viewport more significantly.
 
 It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the URL navigation bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know!
+
+### Author Information
+
+_`steady-viewport` was created by Aaron Beaudoin for [ARYSE®](https://aryse.com)._
