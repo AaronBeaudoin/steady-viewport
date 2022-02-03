@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steady Viewport</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 10 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛰</text></svg>">
+
+
+  <!-- Not recommended for production, but this page is just for demonstrational purposes anyways. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Made creating this page a lot easier. -->
+  <script src="https://unpkg.com/vue@3.2.29"></script>
+
+</head>
+<body>
+
+  <!-- `steady-viewport` must be included here at the top of `<body>`. -->
+  <script src="/index.js"></script>
+
+  <!-- "viewport" and "layout" are the only two features that can currently be enabled. -->
+  <script>steady(["viewport", "layout"]);</script>
+
+  <div id="top-before" class="z-30" data-steady="top"></div>
+  <div id="top-sticky" class="sticky top-0 z-20" data-steady="sticky"></div>
+  <div id="page-before" class="z-10" data-steady="top"></div>
+  <div id="page">
+
+    <teleport to="#top-before">
+      <demo-section name="Top Before" color="purple">
+        <template #snippet-mobile>
+          data-steady="top"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="top-before" data-steady="top"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This purple section represents content placed at the top of the document <b>before</b> sticky content.
+        </template>
+      </demo-section>
+      <divider color="black"></divider>
+    </teleport>
+
+    <teleport to="#top-sticky">
+      <demo-section name="Top Sticky" color="blue">
+        <template #snippet-mobile>
+          data-steady="sticky"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="top-sticky" data-steady="sticky"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This blue section represents content placed at the top of the document that should <b>stick</b>, such as a <b>navbar</b>.
+        </template>
+      </demo-section>
+      <divider color="black"></divider>
+    </teleport>
+
+    <teleport to="#page-before">
+      <demo-section name="Page Before" color="green">
+        <template #snippet-mobile>
+          data-steady="top"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="page-before" data-steady="top"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This green section represents content placed at the top of the page.
+        </template>
+      </demo-section>
+      <divider color="black"></divider>
+    </teleport>
+
+    <!-- Demonstration of `--th`. -->
+    <div class="flex flex-col h-[var(--th)] bg-gray-100 text-gray-600 text-sm">
+      <demo-section-top name="Page Content" color="gray">
+        <template #snippet-mobile>
+          id="page"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="page"&gt; ...content... &lt;/div&gt;
+        </template>
+      </demo-section-top>
+      <div class="grow relative flex flex-col justify-center items-center px-4 text-center">
+        <height-tag>height: var(--th);</height-tag>
+        <h1 class="landscape:hidden md:landscape:block mb-4 text-xl sm:text-4xl font-bold">
+          ⛰ <m>steady-viewport</m> Demo
+        </h1>
+        <p class="max-w-2xl">
+          <span class="landscape:hidden md:landscape:block">
+            Showcasing a minimal flexible layout helped by <m>steady-viewport</m>.
+          </span>
+          <span>
+            This "top height" hero section is sized using the <m>--th</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>top</b> of the document/page marked with the <m>data-steady="<b>top</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.
+          </span>
+        </p>
+        <a href="/" class="landscape:hidden md:landscape:block mt-4 font-bold underline">
+          Go To GitHub Repository
+        </a>
+      </div>
+    </div>
+    
+    <!-- Demonstration of `--ph`. -->
+    <divider color="gray"></divider>
+    <div class="relative flex flex-col justify-center items-center
+    h-[var(--ph)] px-4 text-gray-500 text-sm text-center">
+      <height-tag>height: var(--ph);</height-tag>
+      <p class="max-w-2xl">This "page height" section is sized using the <m>--ph</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any elements in the document marked with the <m>data-steady="<b>sticky</b>"</m> attribute.</p>
+      <p class="max-w-2xl mt-4">If the height appears to be too short on mobile, remember that the mobile URL navigation bar or other UI elements shrinking has no effect on <m>--vh</m>.</p>
+    </div>
+    
+    <!-- Demonstration of `--bh`. -->
+    <divider color="gray"></divider>
+    <div class="relative flex justify-center items-center
+    h-[var(--bh)] px-4 bg-gray-100 text-gray-600 text-sm text-center">
+      <height-tag>height: var(--bh);</height-tag>
+      <p class="max-w-2xl">This "bottom height" section is sized using the <m>--bh</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>bottom</b> of the document/page marked with the <m>data-steady="<b>bottom</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.</p>
+    </div>
+
+    <teleport to="#page-after">
+      <divider color="black"></divider>
+      <demo-section name="Page After" color="orange">
+        <template #snippet-mobile>
+          data-steady="bottom"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="page-after" data-steady="bottom"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This orange section represents content placed at the bottom of the page.
+        </template>
+      </demo-section>
+    </teleport>
+
+    <teleport to="#bottom-sticky">
+      <divider color="black"></divider>
+      <demo-section name="Bottom Sticky" color="pink">
+        <template #snippet-mobile>
+          data-steady="sticky"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="bottom-sticky" data-steady="sticky"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This pink section represents content placed at the bottom of the document that should <b>stick</b>, such as a cookie or promotional banner.
+        </template>
+      </demo-section>
+    </teleport>
+
+    <teleport to="#bottom-after">
+      <divider color="black"></divider>
+      <demo-section name="Bottom After" color="teal">
+        <template #snippet-mobile>
+          data-steady="bottom"
+        </template>
+        <template #snippet-desktop>
+          &lt;div id="bottom-after" data-steady="bottom"&gt; ...content... &lt;/div&gt;
+        </template>
+        <template #note>
+          This teal section represents content placed at the bottom of the document <b>after</b> sticky content.
+        </template>
+      </demo-section>
+    </teleport>
+
+  </div>
+  <div id="page-after" class="z-10" data-steady="bottom"></div>
+  <div id="bottom-sticky" class="sticky bottom-0 z-20" data-steady="sticky"></div>
+  <div id="bottom-after" class="z-30" data-steady="bottom"></div>
+
+  <script>
+    let DemoSectionTop = {
+      template: "#template-demo-section-top",
+      props: ["name", "color"],
+      data: _ => ({
+        styles: {
+          top: {
+            purple: "bg-purple-200",
+            blue: "bg-blue-200",
+            green: "bg-green-200",
+            orange: "bg-orange-200",
+            pink: "bg-pink-200",
+            teal: "bg-teal-200",
+            gray: "bg-gray-200"
+          },
+          tag: {
+            purple: "bg-purple-500",
+            blue: "bg-blue-500",
+            green: "bg-green-500",
+            orange: "bg-orange-500",
+            pink: "bg-pink-500",
+            teal: "bg-teal-500",
+            gray: "bg-gray-500"
+          }
+        }
+      })
+    };
+  </script>
+
+  <script type="text/html" id="template-demo-section-top">
+    <div class="flex items-center px-2 py-2 text-xs" :class="styles.top[color]">
+      <span class="px-1 py-[1px] rounded text-white font-bold uppercase"
+      :class="styles.tag[color]">{{ name }}</span>
+      <span class="sm:hidden ml-3 font-mono">
+        <slot name="snippet-mobile"></slot>
+      </span>
+      <span class="hidden sm:inline ml-3 font-mono">
+        <slot name="snippet-desktop"></slot>
+      </span>
+      <span class="grow hidden 2xl:inline mr-1 text-right">
+        <slot name="note"></slot>
+      </span>
+    </div>
+  </script>
+
+  <script>
+    let DemoSection = {
+      template: "#template-demo-section",
+      props: ["name", "color"],
+      data: _ => ({
+        styles: {
+          purple: "bg-purple-100 text-purple-900",
+          blue: "bg-blue-100 text-blue-900",
+          green: "bg-green-100 text-green-900",
+          orange: "bg-orange-100 text-orange-900",
+          pink: "bg-pink-100 text-pink-900",
+          teal: "bg-teal-100 text-teal-900"
+        }
+      })
+    };
+  </script>
+
+  <script type="text/html" id="template-demo-section">
+    <div class="text-sm" :class="styles[color]">
+      <demo-section-top :name="name" :color="color">
+        <template #snippet-mobile><slot name="snippet-mobile"></slot></template>
+        <template #snippet-desktop><slot name="snippet-desktop"></slot></template>
+        <template #note><slot name="note"></slot></template>
+      </demo-section-top>
+    </div>
+  </script>
+
+  <script>
+    let Divider = {
+      template: `<div class="h-[2px]" :class="styles[color]"></div>`,
+      props: ["color"],
+      data: _ => ({
+        styles: {
+          "black": "bg-black",
+          "gray": "bg-gray-300"
+        }
+      })
+    };
+  </script>
+
+  <script>
+    let Monospace = {
+      template: `<span class="font-mono whitespace-nowrap"><slot></slot></span>`
+    };
+  </script>
+
+  <script>
+    let HeightTag = {
+      template: `<div class="absolute top-0 right-0 px-1 py-0.5 rounded-bl-md bg-yellow-100 text-yellow-600 text-xs font-mono font-bold"><slot></slot></div>`
+    };
+  </script>
+
+  <script>
+    let app = Vue.createApp({});
+    app.component("demo-section-top", DemoSectionTop);
+    app.component("demo-section", DemoSection);
+    app.component("divider", Divider);
+    app.component("m", Monospace);
+    app.component("height-tag", HeightTag);
+    app.mount("#page");
+  </script>
+</body>
+</html>

@@ -62,17 +62,20 @@ function steady(features) {
       let topElements = [];
 
       let resizeObserverHandler = resizes => {
-        let stickyHeight = 0;
         let topHeight = 0;
+        let stickyHeight = 0;
+        let bottomHeight = 0;
 
-        resizes.forEach(resize => {
-          if (resize.target.dataset.steady === "sticky") stickyHeight += resize.target.offsetHeight;
-          if (resize.target.dataset.steady === "top") topHeight += resize.target.offsetHeight;
+        topElements.forEach(element => {
+          if (element.dataset.steady === "top") topHeight += element.offsetHeight;
+          if (element.dataset.steady === "sticky") stickyHeight += element.offsetHeight;
+          if (element.dataset.steady === "bottom") bottomHeight += element.offsetHeight;
         });
 
         let root = document.querySelector(":root");
-        root.style.setProperty("--ph", `calc(var(--vh) - ${stickyHeight}px)`);
         root.style.setProperty("--th", `calc(var(--vh) - ${stickyHeight}px - ${topHeight}px)`);
+        root.style.setProperty("--ph", `calc(var(--vh) - ${stickyHeight}px)`);
+        root.style.setProperty("--bh", `calc(var(--vh) - ${stickyHeight}px - ${bottomHeight}px)`);
       };
 
       let mutationHandler = mutation => {

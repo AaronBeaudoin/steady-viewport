@@ -1,9 +1,22 @@
 # ⛰ `steady-viewport`
 
-The `steady-viewport` JavaScript utility is a tiny, dead simple script with no dependencies which introduces CSS variables that can be used instead of the CSS `vh` and `vw` units to size elements based on the viewport. It can also optionally add super useful CSS variables to help size element which should take up the height of the viewport minus some top navigation bar and/or banner elements.
+`steady-viewport` is a tiny, dead simple JavaScript utility script with no dependencies which introduces CSS variables that can be used instead of the CSS `vh` and `vw` units to size elements based on the viewport. It also optionally adds super useful CSS variables to help size element which should take up the height of the viewport minus some top or bottom elements (navigation bar and/or banner elements).
 
-It was born from the frustrating handling of the `vw` and `vh` units in mobile browsers with URL nagivation bars that toggle in response to user scrolling and in desktop browsers on platforms that cause scrollbars to take up space on the page. It also aims to resolve the frustration of trying to size elements without defining fixed heights for elements at the top of your layout (more on this below).
+## Why use `steady-viewport`?
 
+- The idea behind the CSS `vw` and `vh` units is extremely useful, but in real world practice sizing elements based on these units is plagued by a bunch of problems. In mobile browsers with URL nagivation bars that toggle in response to user scrolling, content in elements sized with a height of `100vh` can end up partially hidden behind the browser UI, and in some mobile browser versions the `vh` unit can even change depending on the visibility of the URL navigation bar, causing jarring layout shift.
+
+- In desktop browsers on platforms that cause scrollbars to take up space on the page, elements sized with a width of `100vw` or a height of `100vh` can potentially cause unwanted scrollbars to appear, because `100vw` includes the width of the vertical scrollbar and `100vh` includes the height of the horizontal scrollbar. For many use cases you really want the viewport dimensions _excluding_ the document scrollbars.
+
+- Sizing elements based on the height of the viewport minus the height of some other arbitrary "top" or "bottom" elements is typically a real pain unless you just hardcode the height of those "top" or "bottom" elements into your CSS with something like `calc(100vh - <height-of-elements>)`.
+
+## Features
+
+- Adds two CSS variables `--vw` and `--vh` which you can use as a simple replacement for `100vw` and `100vh`, avoiding the mobile URL navigation bar and desktop scrollbar issues described above. 🔥
+
+- Optionally adds three more CSS variables `--ph` (page height), `--th` (top height), and `--bh` (bottom height), which you can use to easily size elements based on the height of the viewport minus some other arbitrary "top" or "bottom" elements. 📐
+
+- All CSS variables are kept up-to-date when the browser viewport or any tracked elements are resized. ⚡️
 
 ## Installation
 
@@ -13,50 +26,62 @@ For now, this utility is not on `npm`, but it's still easy to install using the 
 npm install https://github.com/AaronBeaudoin/steady-viewport.git
 ```
 
-Then, include it in your HTML **at the very top of the `<body>`** so it runs before it is parsed:
+Then, include it in your HTML (only on the client side, if applicable) **at the very top of the `<body>`** so it runs before the `<body>` is parsed:
 
 ```html
 <script src="/path/to/script"></script>
 ```
 
-For example, in Vite you can add the following:
-
-```html
-<script src="/node_modules/steady-viewport"></script>
-```
-
-Note that `type="module"` is intentionally left out, because this would defeat the purpose of putting the script in any particular location since such scripts are deferred. Since major layout element may depend on these variables, the script is best run before the `<body>` is rendered to avoid layout shift as the page is loading.
+Note that `type="module"` is intentionally left out, because this would defeat the purpose of putting the script in any particular location since such modules are deferred. Since major layout element may depend on these variables, the script is best run before the `<body>` is rendered to avoid layout shift as the document is first rendered.
 
 Finally, add the following right below the script you just included to enable the features you want:
 
 ```html
-<script>steady(["viewport", "layout"]);</script>
+<script>steady(["<feature-name>", ...]);</script>
 ```
 
-If you do not intend to use the layout CSS variables added by `steady-viewport`, you can remove `"layout"` from the list and the variables will not be created. Note that the layout features of `steady-viewport` depend on `ResizeObserver`, which is only supported in all major browsers as of Q1 2020.
+Currently, the only two features you can enable are `viewport` and `layout`.
+
+By initializing `steady-viewport` this way, you can chooose to remove `layout` from the list if you do not intend to use the layout CSS variables, and they will not be created.
+
+Also, note that the layout features of `steady-viewport` depend on `ResizeObserver`, which is only supported in all major browsers as of Q1 2020.
 
 
 ## Usage (Viewport CSS Variables)
 
-Two simple CSS variables are added and updated by this utility when the `"viewport"` feature is enabled:
+Two simple CSS variables are added and updated by this utility when the `viewport` feature is enabled:
 
-- `--vw`: The viewport width, **not** including the vertical scrollbar if present.
-- `--vh`: The viewport height, **not** including the horizontal scrollbar if present, and not affected by insignificant changes to the viewport height—such as the URL navigation bar toggling in a mobile browser.
+- `--vw`: The viewport width, not including the vertical scrollbar if present.
+- `--vh`: The viewport height, not including the horizontal scrollbar if present, and not affected by insignificant changes to the viewport height—such as the URL navigation bar toggling in a mobile browser. See the "caveat" section below for how this is implemented.
 
 Simply use them anywhere you would use `100vw` or `100vh`.
 
 
 ## Usage (Layout CSS Variables)
 
-Two more simple CSS variables are added and updated by this utility when the `"layout"` feature is enabled:
+Three more simple CSS variables are added and updated by this utility when the `layout` feature is enabled:
 
-- `--ph`: blah blah
-- `--th`: blah blah
+- `--ph`: The "page" height, which is `--vh` minus the height of any elements in the document with the attribute and value `data-steady="sticky"`.
+- `--th`: The "top" height, which is `--vh` minus the height of any elements in the document with the attribute and value `data-steady="sticky"` or `data-steady="top"`.
+- `--bh`: The "bottom" height, which is `--vh` minus the height of any elements in the document with the attribute and value `data-steady="sticky"` or `data-steady="bottom"`.
 
-blah blah blah
+In order for these variables to be created, updated, and work as intended:
+
+- The `data-steady` attribute must be added to a least one element.
+- All elements with the `data-steady` attribute must be direct children of `<body>`.
+
+Add `data-steady="sticky"` to any elements which will always "stick" to the top or bottom of the viewport. Such elements are most likely positioned simply with the CSS `position` property and value `sticky` or `fixed`, but you are free to stick your elements to the top of the viewport however you want.
+
+Add `data-steady="top"` to any other elements (which you haven't already added `data-steady="sticky"` to) which take up space and appear **above** your page content at the **top** of the document.
+
+Add `data-steady="bottom"` to any other elements (which you haven't already added `data-steady="sticky"` to) which take up space and appear **below** your page content at the **bottom** of the document.
+
+Finally, use `--ph` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements; use `--th` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements and your "top" elements; and use `--bh` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements and your "bottom" elements.
+
+For a full example of this in action check out a [live example](/index.html) of the `index.html` file in this repository.
 
 
-## Why not just use `vh` and `vw`?
+## Why not just use `vh` and `vw`? (Detailed Explanation)
 
 When you try to layout things in CSS based on the size of the viewport, there are a few issues you'll commonly run into from my experience:
 
