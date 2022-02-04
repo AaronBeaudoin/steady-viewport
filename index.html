@@ -29,7 +29,7 @@
   <div id="page">
 
     <teleport to="#top-before">
-      <demo-section name="Top Before" color="purple">
+      <demo-section-top name="Top Before" color="purple">
         <template #snippet-mobile>
           data-steady="top"
         </template>
@@ -39,12 +39,12 @@
         <template #note>
           This purple section represents content placed at the top of the document <b>before</b> sticky content.
         </template>
-      </demo-section>
+      </demo-section-top>
       <divider color="black"></divider>
     </teleport>
 
     <teleport to="#top-sticky">
-      <demo-section name="Top Sticky" color="blue">
+      <demo-section-top name="Top Sticky" color="blue">
         <template #snippet-mobile>
           data-steady="sticky"
         </template>
@@ -54,12 +54,12 @@
         <template #note>
           This blue section represents content placed at the top of the document that should <b>stick</b>, such as a <b>navbar</b>.
         </template>
-      </demo-section>
+      </demo-section-top>
       <divider color="black"></divider>
     </teleport>
 
     <teleport to="#page-before">
-      <demo-section name="Page Before" color="green">
+      <demo-section-top name="Page Before" color="green">
         <template #snippet-mobile>
           data-steady="top"
         </template>
@@ -69,38 +69,31 @@
         <template #note>
           This green section represents content placed at the top of the page.
         </template>
-      </demo-section>
+      </demo-section-top>
       <divider color="black"></divider>
     </teleport>
-
+    
     <!-- Demonstration of `--th`. -->
-    <div class="flex flex-col h-[var(--th)] bg-gray-100 text-gray-600 text-sm">
-      <demo-section-top name="Page Content" color="gray">
-        <template #snippet-mobile>
-          id="page"
-        </template>
-        <template #snippet-desktop>
-          &lt;div id="page"&gt; ...content... &lt;/div&gt;
-        </template>
-      </demo-section-top>
-      <div class="grow relative flex flex-col justify-center items-center px-4 text-center">
-        <height-tag>height: var(--th);</height-tag>
-        <h1 class="landscape:hidden md:landscape:block mb-4 text-xl sm:text-4xl font-bold">
-          ⛰ <m>steady-viewport</m> Demo
-        </h1>
-        <p class="max-w-2xl">
-          <span class="landscape:hidden md:landscape:block">
-            Showcasing a minimal flexible layout helped by <m>steady-viewport</m>.
-          </span>
-          <span>
-            This "top height" hero section is sized using the <m>--th</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>top</b> of the document/page marked with the <m>data-steady="<b>top</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.
-          </span>
-        </p>
-        <a href="https://github.com/AaronBeaudoin/steady-viewport"
-        class="landscape:hidden md:landscape:block mt-4 font-bold underline">
-          Go To GitHub Repository
-        </a>
-      </div>
+    <div class="relative flex flex-col justify-center items-center
+    h-[var(--th)] px-4 bg-gray-100 text-gray-600 text-sm text-center">
+      <span class="absolute top-2 left-2 px-1 py-[1px] rounded
+      bg-gray-400 text-xs text-white font-bold uppercase">Page Content</span>
+      <height-tag>height: var(--th);</height-tag>
+      <h1 class="landscape:hidden md:landscape:block mb-4 text-xl sm:text-4xl font-bold">
+        ⛰ <m>steady-viewport</m> Demo
+      </h1>
+      <p class="max-w-2xl">
+        <span class="landscape:hidden md:landscape:block">
+          Showcasing a minimal flexible layout helped by <m>steady-viewport</m>.
+        </span>
+        <span>
+          This "top height" hero section is sized using the <m>--th</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>top</b> of the document/page marked with the <m>data-steady="<b>top</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.
+        </span>
+      </p>
+      <a href="https://github.com/AaronBeaudoin/steady-viewport"
+      class="landscape:hidden md:landscape:block mt-4 font-bold underline">
+        Go To GitHub Repository
+      </a>
     </div>
     
     <!-- Demonstration of `--ph`. -->
@@ -114,7 +107,7 @@
     
     <!-- Demonstration of `--bh`. -->
     <divider color="gray"></divider>
-    <div class="relative flex justify-center items-center
+    <div class="relative flex flex-col justify-center items-center
     h-[var(--bh)] px-4 bg-gray-100 text-gray-600 text-sm text-center">
       <height-tag>height: var(--bh);</height-tag>
       <p class="max-w-2xl">This "bottom height" section is sized using the <m>--bh</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>bottom</b> of the document/page marked with the <m>data-steady="<b>bottom</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.</p>
@@ -122,7 +115,7 @@
 
     <teleport to="#page-after">
       <divider color="black"></divider>
-      <demo-section name="Page After" color="orange">
+      <demo-section-top name="Page After" color="orange">
         <template #snippet-mobile>
           data-steady="bottom"
         </template>
@@ -132,12 +125,12 @@
         <template #note>
           This orange section represents content placed at the bottom of the page.
         </template>
-      </demo-section>
+      </demo-section-top>
     </teleport>
 
     <teleport to="#bottom-sticky">
       <divider color="black"></divider>
-      <demo-section name="Bottom Sticky" color="pink">
+      <demo-section-top name="Bottom Sticky" color="pink">
         <template #snippet-mobile>
           data-steady="sticky"
         </template>
@@ -147,12 +140,12 @@
         <template #note>
           This pink section represents content placed at the bottom of the document that should <b>stick</b>, such as a cookie or promotional banner.
         </template>
-      </demo-section>
+      </demo-section-top>
     </teleport>
 
     <teleport to="#bottom-after">
       <divider color="black"></divider>
-      <demo-section name="Bottom After" color="teal">
+      <demo-section-top name="Bottom After" color="teal">
         <template #snippet-mobile>
           data-steady="bottom"
         </template>
@@ -162,7 +155,7 @@
         <template #note>
           This teal section represents content placed at the bottom of the document <b>after</b> sticky content.
         </template>
-      </demo-section>
+      </demo-section-top>
     </teleport>
 
   </div>
@@ -176,14 +169,13 @@
       props: ["name", "color"],
       data: _ => ({
         styles: {
-          top: {
-            purple: "bg-purple-200",
-            blue: "bg-blue-200",
-            green: "bg-green-200",
-            orange: "bg-orange-200",
-            pink: "bg-pink-200",
-            teal: "bg-teal-200",
-            gray: "bg-gray-200"
+          root: {
+            purple: "bg-purple-200 text-purple-900",
+            blue: "bg-blue-200 text-blue-900",
+            green: "bg-green-200 text-green-900",
+            orange: "bg-orange-200 text-orange-900",
+            pink: "bg-pink-200 text-pink-900",
+            teal: "bg-teal-200 text-teal-900"
           },
           tag: {
             purple: "bg-purple-500",
@@ -191,8 +183,7 @@
             green: "bg-green-500",
             orange: "bg-orange-500",
             pink: "bg-pink-500",
-            teal: "bg-teal-500",
-            gray: "bg-gray-500"
+            teal: "bg-teal-500"
           }
         }
       })
@@ -200,7 +191,7 @@
   </script>
 
   <script type="text/html" id="template-demo-section-top">
-    <div class="flex items-center px-2 py-2 text-xs" :class="styles.top[color]">
+    <div class="flex items-center px-2 py-2 text-xs" :class="styles.root[color]">
       <span class="px-1 py-[1px] rounded text-white font-bold uppercase"
       :class="styles.tag[color]">{{ name }}</span>
       <span class="sm:hidden ml-3 font-mono">
@@ -212,33 +203,6 @@
       <span class="grow hidden 2xl:inline mr-1 text-right">
         <slot name="note"></slot>
       </span>
-    </div>
-  </script>
-
-  <script>
-    let DemoSection = {
-      template: "#template-demo-section",
-      props: ["name", "color"],
-      data: _ => ({
-        styles: {
-          purple: "bg-purple-100 text-purple-900",
-          blue: "bg-blue-100 text-blue-900",
-          green: "bg-green-100 text-green-900",
-          orange: "bg-orange-100 text-orange-900",
-          pink: "bg-pink-100 text-pink-900",
-          teal: "bg-teal-100 text-teal-900"
-        }
-      })
-    };
-  </script>
-
-  <script type="text/html" id="template-demo-section">
-    <div class="text-sm" :class="styles[color]">
-      <demo-section-top :name="name" :color="color">
-        <template #snippet-mobile><slot name="snippet-mobile"></slot></template>
-        <template #snippet-desktop><slot name="snippet-desktop"></slot></template>
-        <template #note><slot name="note"></slot></template>
-      </demo-section-top>
     </div>
   </script>
 
@@ -270,7 +234,6 @@
   <script>
     let app = Vue.createApp({});
     app.component("demo-section-top", DemoSectionTop);
-    app.component("demo-section", DemoSection);
     app.component("divider", Divider);
     app.component("m", Monospace);
     app.component("height-tag", HeightTag);
