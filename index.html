@@ -82,13 +82,11 @@
       <h1 class="landscape:hidden md:landscape:block mb-4 text-xl sm:text-4xl font-bold">
         ⛰ <m>steady-viewport</m> Demo
       </h1>
-      <p class="max-w-2xl">
-        <span class="landscape:hidden md:landscape:block">
-          Showcasing a minimal flexible layout helped by <m>steady-viewport</m>.
-        </span>
-        <span>
-          This "top height" hero section is sized using the <m>--th</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>top</b> of the document/page marked with the <m>data-steady="<b>top</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.
-        </span>
+      <p class="landscape:hidden md:landscape:block md:text-lg">
+        Minimal page structure showcasing the layout features of <m>steady-viewport</m>.
+      </p>
+      <p class="max-w-2xl mt-4">
+        This "top height" hero section is sized using the <m>--th</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any children of the <m>&lt;body&gt;</m> element marked with the <m>data-steady="<b>top</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.
       </p>
       <a href="https://github.com/AaronBeaudoin/steady-viewport"
       class="landscape:hidden md:landscape:block mt-4 font-bold underline">
@@ -101,8 +99,8 @@
     <div class="relative flex flex-col justify-center items-center
     h-[var(--ph)] px-4 text-gray-500 text-sm text-center">
       <height-tag>height: var(--ph);</height-tag>
-      <p class="max-w-2xl">This "page height" section is sized using the <m>--ph</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any elements in the document marked with the <m>data-steady="<b>sticky</b>"</m> attribute.</p>
-      <p class="max-w-2xl mt-4">If the height appears to be too short on mobile, remember that the mobile URL navigation bar or other UI elements shrinking has no effect on <m>--vh</m>.</p>
+      <p class="max-w-2xl">This "page height" section is sized using the <m>--ph</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any children of the <m>&lt;body&gt;</m> element marked with the <m>data-steady="<b>sticky</b>"</m> attribute.</p>
+      <p class="max-w-2xl mt-4">If you are on a mobile device and the height appears to be too short, remember that if  your URL navigation bar or some other UI element has shrunk then there will be a bit of extra vertical space that was intentionally ignored by <m>--vh</m>.</p>
     </div>
     
     <!-- Demonstration of `--bh`. -->
@@ -110,7 +108,7 @@
     <div class="relative flex flex-col justify-center items-center
     h-[var(--bh)] px-4 bg-gray-100 text-gray-600 text-sm text-center">
       <height-tag>height: var(--bh);</height-tag>
-      <p class="max-w-2xl">This "bottom height" section is sized using the <m>--bh</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any element at the <b>bottom</b> of the document/page marked with the <m>data-steady="<b>bottom</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.</p>
+      <p class="max-w-2xl">This "bottom height" section is sized using the <m>--bh</m> CSS variable for pixel-perfect height. Its height is simply <m>--vh</m> minus the height of any children of the <m>&lt;body&gt;</m> element marked with the <m>data-steady="<b>bottom</b>"</m> or <m>data-steady="<b>sticky</b>"</m> attributes.</p>
     </div>
 
     <teleport to="#page-after">

@@ -92,15 +92,16 @@ The fact that these two issues even exist really makes the `vh` and `vw` units f
 
 The reason why there is even a possibility that this utility **might** negatively impact use cases I haven't thought of is because of the rather simplistic way that it tries to detect viewport height changes caused by a toggling mobile browser URL navigation bar.
 
-The way that this utility prevents the URL navigation bar from updating the `--vh` CSS variable is by naively not changing the variable if a window resize event occurs at least half a second away from the last window resize event **and** doesn't change the orientation of the viewport **and** only changes the area of the viewport by less than a third.
+The way that this utility prevents the URL navigation bar from updating the `--vh` CSS variable is by naively not changing the variable if a window resize event occurs at least half a second away from the last window resize event **and** is only changing the height **and** doesn't change the orientation of the viewport **and** only changes the area of the viewport by less than a third.
 
-To recap, the following three conditions must all be met:
+To recap, the following conditions must all be met:
 
-- A window resize event has not occured in the last half a second.
-- The orientation of the window viewport has not changed.
-- The area of the window viewport has only changed by less than a third.
+1. A window resize event has not occured in the last half a second.
+2. The width of the viewport is not changing, only the height is.
+3. The orientation of the window viewport has not changed.
+4. The area of the window viewport has only changed by less than a third.
 
-As previously indicated, I haven't been able to think of a scenario where this would be a problem, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the URL navigation bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes which change the dimensions of the viewport more significantly.
+As previously indicated, this naive method of detecting the mobile URL navigation bar toggling does not cause any negative side effects as far as I know, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the URL navigation bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes to the dimensions of the viewport.
 
 It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the URL navigation bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know by leaving an issue!
 
