@@ -4,7 +4,7 @@
 
 ## Why use `steady-viewport`?
 
-- The idea behind the CSS `vw` and `vh` units is extremely useful, but in real world practice sizing elements based on these units is plagued by a bunch of problems. In mobile browsers with URL nagivation bars that toggle in response to user scrolling, content in elements sized with a height of `100vh` can end up partially hidden behind the browser UI, and in some mobile browser versions the `vh` unit can even change depending on the visibility of the URL navigation bar, causing jarring layout shift.
+- The idea behind the CSS `vw` and `vh` units is extremely useful, but in real world practice sizing elements based on these units is plagued by a bunch of problems. In mobile browsers with address bars that toggle in response to user scrolling, content in elements sized with a height of `100vh` can end up partially hidden behind the browser UI, and in some versions the `vh` unit can even change depending on the visibility of the address bar, causing jarring layout shift.
 
 - In desktop browsers on platforms that cause scrollbars to take up space on the page, elements sized with a width of `100vw` or a height of `100vh` can potentially cause unwanted scrollbars to appear, because `100vw` includes the width of the vertical scrollbar and `100vh` includes the height of the horizontal scrollbar. For many use cases you really want the viewport dimensions _excluding_ the document scrollbars.
 
@@ -12,7 +12,7 @@
 
 ## Features
 
-- Adds two CSS variables `--vw` and `--vh` which you can use as a simple replacement for `100vw` and `100vh`, avoiding the mobile URL navigation bar and desktop scrollbar issues described above. 🔥
+- Adds two CSS variables `--vw` and `--vh` which you can use as a simple replacement for `100vw` and `100vh`, avoiding the mobile address bar and desktop scrollbar issues described above. 🔥
 
 - Optionally adds three more CSS variables `--ph` (page height), `--th` (top height), and `--bh` (bottom height), which you can use to easily size elements based on the height of the viewport minus some other arbitrary "top" or "bottom" elements. 📐
 
@@ -48,7 +48,7 @@ Also, note that the layout features of `steady-viewport` depend on `ResizeObserv
 Two simple CSS variables are added and updated by this utility when the `viewport` feature is enabled:
 
 - `--vw`: The viewport width, not including the vertical scrollbar if present.
-- `--vh`: The viewport height, not including the horizontal scrollbar if present, and not affected by insignificant changes to the viewport height—such as the URL navigation bar toggling in a mobile browser. See the "caveat" section below for how this is implemented.
+- `--vh`: The viewport height, not including the horizontal scrollbar if present, and not affected by insignificant changes to the viewport height—such as the mobile address bar toggling. See the "caveat" section below for how this is implemented.
 
 Simply use them anywhere you would use `100vw` or `100vh`.
 
@@ -81,18 +81,18 @@ For a full example of this in action check out a [live example](https://aaronbea
 
 When you try to layout things in CSS based on the size of the viewport, there are a few issues you'll commonly run into from my experience:
 
-- Relying on the `vh` unit to size elements that should be the height of the page is not a viable solution for mobile browsers. This is because in some mobile browsers the `vh` unit changes whenever the URL navigation bar is hidden or shown. This causes elements with dimensions relying on the `vh` unit to change size whenever the URL navigation bar "toggles", which can make the entire page jump around and negatively impact the user experience. (In some other mobile browsers the `vh` unit simply always takes up the space behind the URL navigation bar, which is also not ideal because content ends up hidden.)
+- Relying on the `vh` unit to size elements that should be the height of the page is not a viable solution for mobile browsers. This is because in some mobile browsers the `vh` unit changes whenever the address bar is hidden or shown. This causes elements with dimensions relying on the `vh` unit to change size whenever the address bar "toggles", which can make the entire page jump around and negatively impact the user experience. (In some other mobile browsers the `vh` unit simply always takes up the space behind the address bar, which is also not ideal because content ends up hidden.)
 
 - Relying on the `vw` and `vh` units to size elements that should be the width or height of the page is not a viable solution for browsers where the scrollbar takes up space on the page (it is not overlaid). This is because the `vw` and `vh` units includes the vertical and horizontal scrollbars respectively. This causes elements with dimensions relying on the `vw` or `vh` units to potentially either introduce unwanted (most likely horizontal) scrolling or be a bit too tall, both of which negatively impact the user experience.
 
 The fact that these two issues even exist really makes the `vh` and `vw` units feel half-baked. In reality, we can blame varying browser implementations or the emergence of new types of devices for these issues, but either way they're probably not going to change. Since sizing elements based on the viewport is still a really useful feature regardless, this utility is helpful because it solves both of these issues without negatively impacting any use cases as far as I know.
 
 
-## Caveat to `vh` Change Detection
+## Caveat to Mobile Address Bar Toggle Detection
 
-The reason why there is even a possibility that this utility **might** negatively impact use cases I haven't thought of is because of the rather simplistic way that it tries to detect viewport height changes caused by a toggling mobile browser URL navigation bar.
+The reason why there is even a possibility that this utility **might** negatively impact use cases I haven't thought of is because of the rather simplistic way that it tries to detect viewport height changes caused by a toggling mobile address bar.
 
-The way that this utility prevents the URL navigation bar from updating the `--vh` CSS variable is by naively not changing the variable if a window resize event occurs at least half a second away from the last window resize event **and** is only changing the height **and** doesn't change the orientation of the viewport **and** only changes the area of the viewport by less than a third.
+The way that this utility prevents the mobile address bar from updating the `--vh` CSS variable is by naively not changing the variable if a window resize event occurs at least half a second away from the last window resize event **and** is only changing the height **and** doesn't change the orientation of the viewport **and** only changes the area of the viewport by less than a third.
 
 To recap, the following conditions must all be met:
 
@@ -101,9 +101,9 @@ To recap, the following conditions must all be met:
 3. The orientation of the window viewport has not changed.
 4. The area of the window viewport has only changed by less than a third.
 
-As previously indicated, this naive method of detecting the mobile URL navigation bar toggling does not cause any negative side effects as far as I know, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the URL navigation bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes to the dimensions of the viewport.
+As previously indicated, this naive method of detecting the mobile address bar toggling does not cause any negative side effects as far as I know, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the mobile address bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes to the dimensions of the viewport.
 
-It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the URL navigation bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know by leaving an issue!
+It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the mobile address bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know by leaving an issue!
 
 
 ### Author Information
