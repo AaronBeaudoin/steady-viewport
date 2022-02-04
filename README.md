@@ -66,7 +66,7 @@ In order for these variables to be created, updated, and work as intended:
 - The `data-steady` attribute must be added to a least one element.
 - All elements with the `data-steady` attribute must be direct children of `<body>`.
 
-Add `data-steady="sticky"` to any elements which will always "stick" to the top or bottom of the viewport. Such elements are most likely positioned simply with the CSS `position` property and value `sticky` or `fixed`, but you are free to stick your elements to the top of the viewport however you want.
+Add `data-steady="sticky"` to any elements which will always "stick" to the **top** or **bottom** of the viewport. Such elements are most likely positioned simply with the CSS `position` property and value `sticky` or `fixed`, but you are free to stick your elements to the top of the viewport however you want.
 
 Add `data-steady="top"` to any other elements (which you haven't already added `data-steady="sticky"` to) which take up space and appear **above** your page content at the **top** of the document.
 
@@ -102,7 +102,7 @@ To recap, the following three conditions must all be met:
 
 As previously indicated, I haven't been able to think of a scenario where this would be a problem, but it's good to be aware of. From my testing, these conditions are enough to prevent the viewport height from updating in response to small changes like toggling the URL navigation bar; but also narrow enough to _not_ block updating in response to changing a device's orientation, dragging the corner of a window with a cursor, or other changes which change the dimensions of the viewport more significantly.
 
-It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the URL navigation bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know!
+It is therefore being assumed that any smaller changes which do not cause this utility to update the `--vh` CSS variable are—like the URL navigation bar—insignficant enough to be not worth responding to. If you find an exception to this, please let me know by leaving an issue!
 
 
 ### Author Information
