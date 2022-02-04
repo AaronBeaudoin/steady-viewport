@@ -32,17 +32,13 @@ Then, include it in your HTML (only on the client side, if applicable) **at the 
 <script src="/path/to/script"></script>
 ```
 
-Note that `type="module"` is intentionally left out, because this would defeat the purpose of putting the script in any particular location since such modules are deferred. Since major layout element may depend on these variables, the script is best run before the `<body>` is rendered to avoid layout shift as the document is first rendered.
-
-Finally, add the following right below the script you just included to enable the features you want:
+Note that `type="module"` is intentionally left out, because this would defeat the purpose of putting the script in any particular location since such modules are deferred. Finally, add the following right below the script you just included to enable the features you want:
 
 ```html
 <script>steady(["<feature-name>", ...]);</script>
 ```
 
-Currently, the only two features you can enable are `viewport` and `layout`.
-
-By initializing `steady-viewport` this way, you can chooose to remove `layout` from the list if you do not intend to use the layout CSS variables, and they will not be created.
+Currently, the only two features you can enable are `viewport` and `layout`. By initializing `steady-viewport` this way, you can chooose to remove `layout` from the list if you do not intend to use the layout CSS variables, and they will not be created.
 
 Also, note that the layout features of `steady-viewport` depend on `ResizeObserver`, which is only supported in all major browsers as of Q1 2020.
 
@@ -78,7 +74,7 @@ Add `data-steady="bottom"` to any other elements (which you haven't already adde
 
 Finally, use `--ph` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements; use `--th` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements and your "top" elements; and use `--bh` to size elements which you would like to take up the height of the viewport **minus** the height of your "sticky" elements and your "bottom" elements.
 
-For a full example of this in action check out a [live example](/index.html) of the `index.html` file in this repository.
+For a full example of this in action check out a [live example](https://aaronbeaudoin.github.io/steady-viewport) of the `index.html` file in this repository.
 
 
 ## Why not just use `vh` and `vw`? (Detailed Explanation)
