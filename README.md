@@ -23,7 +23,7 @@
 For now, this utility is not on `npm`, but it's still easy to install using the following command:
 
 ```
-npm install https://github.com/AaronBeaudoin/steady-viewport.git
+npm install https://github.com/AaronBeaudoin/steady-viewport.git#v0.1.1
 ```
 
 Then, include it in your HTML (only on the client side, if applicable) **at the very top of the `<body>`** so it runs before the `<body>` is parsed:

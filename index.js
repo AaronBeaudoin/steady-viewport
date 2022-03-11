@@ -65,20 +65,39 @@ function steady(features) {
       let topElements = [];
 
       let resizeObserverHandler = resizes => {
-        let topHeight = 0;
-        let stickyHeight = 0;
-        let bottomHeight = 0;
+        let heights = {
+          topBefore: 0,
+          topSticky: 0,
+          pageBefore: 0,
+          pageAfter: 0,
+          bottomSticky: 0,
+          bottomAfter: 0
+        };
 
         topElements.forEach(element => {
-          if (element.dataset.steady === "top") topHeight += element.offsetHeight;
-          if (element.dataset.steady === "sticky") stickyHeight += element.offsetHeight;
-          if (element.dataset.steady === "bottom") bottomHeight += element.offsetHeight;
+          if (element.dataset.steady === "top-before") heights.topBefore += element.offsetHeight;
+          if (element.dataset.steady === "top-sticky") heights.topSticky += element.offsetHeight;
+          if (element.dataset.steady === "page-before") heights.pageBefore += element.offsetHeight;
+          if (element.dataset.steady === "page-after") heights.pageAfter += element.offsetHeight;
+          if (element.dataset.steady === "bottom-sticky") heights.bottomSticky += element.offsetHeight;
+          if (element.dataset.steady === "bottom-after") heights.bottomAfter += element.offsetHeight;
         });
 
         let root = document.querySelector(":root");
-        root.style.setProperty("--th", `calc(var(--vh) - ${stickyHeight}px - ${topHeight}px)`);
+        root.style.setProperty("--top-before", `${heights.topBefore}px)`);
+        root.style.setProperty("--top-sticky", `${heights.topSticky}px)`);
+        root.style.setProperty("--page-before", `${heights.pageBefore}px)`);
+        root.style.setProperty("--page-after", `${heights.pageAfter}px)`);
+        root.style.setProperty("--bottom-sticky", `${heights.bottomSticky}px)`);
+        root.style.setProperty("--bottom-after", `${heights.bottomAfter}px)`);
+
+        let beforeHeight = heights.topBefore + heights.pageBefore;
+        let stickyHeight = heights.topSticky + heights.bottomSticky;
+        let afterHeight = heights.pageAfter + heights.bottomAfter;
         root.style.setProperty("--ph", `calc(var(--vh) - ${stickyHeight}px)`);
-        root.style.setProperty("--bh", `calc(var(--vh) - ${stickyHeight}px - ${bottomHeight}px)`);
+        root.style.setProperty("--th", `calc(var(--vh) - ${beforeHeight}px - ${stickyHeight}px)`);
+        root.style.setProperty("--bh", `calc(var(--vh) - ${stickyHeight}px - ${afterHeight}px)`);
+        root.style.setProperty("--ih", `calc(var(--vh) - ${beforeHeight}px - ${stickyHeight}px - ${afterHeight}px)`);
       };
 
       let mutationHandler = mutation => {

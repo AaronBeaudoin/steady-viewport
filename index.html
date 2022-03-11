@@ -23,10 +23,10 @@
   <!-- "viewport" and "layout" are the only two features that can currently be enabled. -->
   <script>steady(["viewport", "layout"]);</script>
 
-  <div id="top-before" class="z-30" data-steady="top"></div>
-  <div id="top-sticky" class="sticky top-0 z-20" data-steady="sticky"></div>
-  <div id="page-before" class="z-10" data-steady="top"></div>
-  <div id="page">
+  <div id="top-before" class="z-30" data-steady="top-before"></div>
+  <div id="top-sticky" class="sticky top-0 z-20" data-steady="top-sticky"></div>
+  <div id="page-before" class="z-10" data-steady="page-before"></div>
+  <div id="page" data-steady="page">
 
     <teleport to="#top-before">
       <demo-section-top name="Top Before" color="purple">
@@ -157,9 +157,9 @@
     </teleport>
 
   </div>
-  <div id="page-after" class="z-10" data-steady="bottom"></div>
-  <div id="bottom-sticky" class="sticky bottom-0 z-20" data-steady="sticky"></div>
-  <div id="bottom-after" class="z-30" data-steady="bottom"></div>
+  <div id="page-after" class="z-10" data-steady="page-after"></div>
+  <div id="bottom-sticky" class="sticky bottom-0 z-20" data-steady="bottom-sticky"></div>
+  <div id="bottom-after" class="z-30" data-steady="bottom-after"></div>
 
   <script>
     let DemoSectionTop = {
